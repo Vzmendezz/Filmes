@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sessão de Cinema</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0b0d;
+      color: #ffffff;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 960px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      color: #e5e5e5;
+    }
+    video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mama (2013)</h1>
+    <video id="player" controls playsinline preload="metadata"></video>
+  </div>
+
+  <script>
+    const video = document.getElementById('player');
+    const videoSrc = 'https://strm14.uqload.vc/hls2/03/06239/z6as2b2m7uqs_h/master.m3u8?t=KWQsar4MCEO6VrdiKCMDtD93slUpCD_tPe4h3f9FJPw&s=1794524321&e=14400&v=16113&i=0.0&sp=0&fr=z6as2b2m7uqs';
+
+    if (videoSrc.includes('.m3u8')) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+      }
+    } else {
+      video.src = videoSrc;
+    }
+  </script>
+</body>
+</html>
